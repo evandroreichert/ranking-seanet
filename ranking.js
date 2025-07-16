@@ -18,19 +18,15 @@ const CONFIG = {
     anoAnalise: '',
     
     vendedores: {
-        'Verena': 'Naisa Verena Verfe Ceratti',
-        'Míriam': 'Miriam da Costa da Silva Reis',
-        'Andreia': 'Andreia Maduell Ivannoff',
-        'Josiane': 'Josiane Ferreira de Oliveira',
-        'Michel': 'Michel Luiz'
+        'PrimeiroNome': 'Nome Completo',
+        'Fulano': 'Fulano da Silva',
+        'Teste': 'Teste de Vendedor'
     },
     
     metas: {
-        'Verena': 18000.00,  
-        'Míriam': 18000.00,  
-        'Andreia': 18000.00, 
-        'Josiane': 18000.00, 
-        'Michel': 18000.00   
+        'PrimeiroNome': 18000.00,  
+        'Fulano': 18000.00,  
+        'Teste': 18000.00
     }
 };
 
@@ -65,9 +61,8 @@ function isVendaCadastradaRelevante(row, mes, ano) {
     return false;
 }
 
-// FUNÇÃO ATUALIZADA: Meta por valor em vez de quantidade
 function calcularMeta(nomeVendedor, valorInstalado) {
-    const metaValor = CONFIG.metas[nomeVendedor] || 45000.00;
+    const metaValor = CONFIG.metas[nomeVendedor] || 18000.00;
     const percentual = Math.min((valorInstalado / metaValor) * 100, 100);
     const percentualReal = (valorInstalado / metaValor) * 100;
     
@@ -99,7 +94,6 @@ function processarDadosVendedor(data, nomeCompleto, mes, ano) {
         sum + (parseFloat(row.valor_final) || 0), 0
     );
     
-    // MUDANÇA: Passa o valor em vez da quantidade para calcular meta
     const dadosMeta = calcularMeta(nomeVendedor, valorInstaladoMes);
     
     return {
@@ -140,12 +134,6 @@ function gerarTextoRanking(ranking, mes, ano) {
         }
         texto += `\n`;
     });
-    
-    texto += `───────────────────────────────────────────────────\n`;
-    texto += `CRITÉRIOS DO RANKING:\n`;
-    texto += `• Vendas Instaladas: Instalações finalizadas em ${mesAnoCompleto}\n`;
-    texto += `• Valor das Vendas Instaladas: Soma total dos valores instalados em ${mesAnoCompleto}\n`;
-    texto += `• Metas por Valor: Verena, Míriam, Andreia, Josiane = R$ 45.000 | Michel = R$ 22.500\n`;
     
     return texto;
 }
